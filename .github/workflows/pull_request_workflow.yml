@@ -3,7 +3,7 @@ name: Pull Request Workflow
 on:
   push:
     branches:
-      - feature-chisom
+      - feature-branch  # Replace this with the name of your feature branch
 
 jobs:
   create_pull_request:
@@ -20,4 +20,18 @@ jobs:
           commit-message: "Automated Pull Request"
           title: "Feature Branch Changes"
           body: "Please review and approve these changes."
-          branch: master
+          branch: main  # Replace this with the target branch where you want to merge the changes
+
+      - name: Wait for Approvals
+        uses: peter-evans/wait-for-approval@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request: ${{ steps.create_pull_request.outputs.pull-request-url }}
+          reviewers: PrincessOrika  # Replace with GitHub usernames of the reviewers you want to assign
+
+      - name: Merge Pull Request
+        uses: peter-evans/merge-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request: ${{ steps.create_pull_request.outputs.pull-request-url }}
+          strategy: merge  # Use 'merge' or 'squash' based on your preferred merge strategy
