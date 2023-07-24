@@ -20,7 +20,7 @@ jobs:
           commit-message: "Automated Pull Request"
           title: "Feature Branch Changes"
           body: "Please review and approve these changes."
-          branch: main  # Replace this with the target branch where you want to merge the changes
+          branch: master  # Replace this with the target branch where you want to merge the changes
 
       - name: Wait for Approvals
         uses: peter-evans/wait-for-approval@v1
